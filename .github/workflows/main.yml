@@ -1,0 +1,35 @@
+# Name of your workflow (shown in GitHub Actions UI)
+name: Build a project
+
+# Trigger: when should this workflow run?
+on:
+  push:                 # Run workflow on every push
+    branches: [main]   # Only when pushing to 'main' branch
+
+# Define what jobs to run
+jobs:
+  build:                # Job name (you can name anything)
+    
+    # Type of machine GitHub gives you
+    runs-on: ubuntu-latest   # Linux machine (fresh every time)
+
+    # Steps = list of actions/commands to execute
+    steps:
+
+      # Step 1: Get your code from GitHub repo
+      - name: Checkout code
+        uses: actions/checkout@v3   # Prebuilt GitHub action
+
+      # Step 2: Setup Node.js environment
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18          # Install Node 18
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install            # Same as your local terminal
+
+      # Step 4: Build the React app
+      - name: Build project
+        run: npm run build          # Creates 'dist/' folder
